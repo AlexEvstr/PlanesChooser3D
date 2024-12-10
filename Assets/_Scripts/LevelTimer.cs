@@ -3,26 +3,20 @@ using UnityEngine.UI;
 
 public class LevelTimer : MonoBehaviour
 {
-    public Text timerText;              // Текстовое поле для отображения времени
-    public ResultManager resultManager; // Ссылка на ResultManager
-    public PlaneManager planeManager;   // Ссылка на PlaneManager
+    public Text timerText;
+    public ResultManager resultManager;
+    public PlaneManager planeManager;
 
-    public int currentLevel = 1;        // Текущий уровень
-    private float timer;                // Текущее время обратного отсчета
+    public int currentLevel = 1;
+    private float timer;
     private bool isRunning = false;
 
-    private int targetPlaneCount = 0;   // Количество целевых самолетов, подсчитанных за уровень
+    private int targetPlaneCount = 0;
 
     private void Start()
     {
-        // Загружаем текущий уровень или устанавливаем 1 по умолчанию
         currentLevel = PlayerPrefs.GetInt("Level", 1);
-
-        // Рассчитываем длительность уровня
         timer = currentLevel * 5f;
-
-        // Обновляем отображение таймера
-        //UpdateTimerText();
     }
 
     private void Update()
@@ -62,12 +56,8 @@ public class LevelTimer : MonoBehaviour
 
     private void EndLevel()
     {
-        // Останавливаем спавн самолетов
         planeManager.CancelInvoke();
 
-        // Показываем окно с результатами
-        resultManager.ShowResultPanel(targetPlaneCount);
-
-        
+        resultManager.ShowResultPanel(targetPlaneCount);    
     }
 }

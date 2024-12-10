@@ -5,13 +5,12 @@ using System.Collections.Generic;
 
 public class ResultManager : MonoBehaviour
 {
-    public GameObject resultPanel;     // Панель с вариантами ответа
-    public GameObject winPanel;       // Панель победы
-    public GameObject losePanel;      // Панель поражения
-    public Text[] answerButtons;      // Текстовые поля для кнопок ответов
+    public GameObject resultPanel;
+    public GameObject winPanel;
+    public GameObject losePanel;
+    public Text[] answerButtons;
 
-    private int correctAnswer;        // Правильный ответ
-    //private int targetCount;          // Количество целевых самолетов
+    private int correctAnswer;
     private System.Random random = new System.Random();
 
     public void ShowResultPanel(int counted)
@@ -22,20 +21,18 @@ public class ResultManager : MonoBehaviour
     private IEnumerator WaitForAllPlanes(int counted)
     {
         yield return new WaitForSeconds(5.0f);
-        correctAnswer = counted; // Правильный ответ — количество целевых самолетов
+        correctAnswer = counted;
 
-        // Генерация ответов
         int[] answers = GenerateAnswers(correctAnswer);
 
         for (int i = 0; i < answerButtons.Length; i++)
         {
-            answerButtons[i].text = answers[i].ToString(); // Отображаем ответы на кнопках
-            int answer = answers[i]; // Копия для замыкания
+            answerButtons[i].text = answers[i].ToString();
+            int answer = answers[i];
             answerButtons[i].transform.parent.GetComponent<Button>().onClick.RemoveAllListeners();
             answerButtons[i].transform.parent.GetComponent<Button>().onClick.AddListener(() => CheckAnswer(answer));
         }
 
-        // Плавное открытие панели
         resultPanel.SetActive(true);
         StartCoroutine(ScaleResultPanel());
     }
@@ -48,7 +45,7 @@ public class ResultManager : MonoBehaviour
 
         while (progress < 1)
         {
-            progress += Time.deltaTime * 2; // Скорость увеличения
+            progress += Time.deltaTime * 2;
             resultPanel.transform.localScale = Vector3.Lerp(startScale, targetScale, progress);
             yield return null;
         }
@@ -58,24 +55,22 @@ public class ResultManager : MonoBehaviour
     {
         Debug.Log(correctAnswer);
         int[] answers = new int[4];
-        HashSet<int> uniqueAnswers = new HashSet<int>(); // Для проверки уникальности
+        HashSet<int> uniqueAnswers = new HashSet<int>();
 
-        // Генерируем случайную позицию для правильного ответа
         int correctIndex = Random.Range(0, 4);
-        answers[correctIndex] = correct; // Устанавливаем правильный ответ
+        answers[correctIndex] = correct;
         uniqueAnswers.Add(correct);
 
         for (int i = 0; i < answers.Length; i++)
         {
-            if (i == correctIndex) continue; // Пропускаем индекс правильного ответа
+            if (i == correctIndex) continue;
 
             int randomAnswer;
             do
             {
-                // Генерируем уникальные неправильные ответы
-                randomAnswer = correct + Random.Range(-5, 6); // Диапазон значений
+                randomAnswer = correct + Random.Range(-5, 6);
             }
-            while (randomAnswer < 0 || uniqueAnswers.Contains(randomAnswer)); // Исключаем дубликаты и отрицательные значения
+            while (randomAnswer < 0 || uniqueAnswers.Contains(randomAnswer));
 
             answers[i] = randomAnswer;
             uniqueAnswers.Add(randomAnswer);
@@ -84,11 +79,8 @@ public class ResultManager : MonoBehaviour
         return answers;
     }
 
-
-
     private void CheckAnswer(int answer)
     {
-        // Проверяем правильность ответа
         resultPanel.SetActive(false);
 
         if (answer == correctAnswer)
@@ -106,8 +98,8 @@ public class ResultManager : MonoBehaviour
         winPanel.SetActive(true);
         StartCoroutine(ScalePanel(winPanel.transform));
         int currentLevel = PlayerPrefs.GetInt("Level", 1);
-        currentLevel++; // Увеличиваем уровень
-        PlayerPrefs.SetInt("Level", currentLevel); // Сохраняем уровень
+        currentLevel++;
+        PlayerPrefs.SetInt("Level", currentLevel);
     }
 
     private void ShowLosePanel()
@@ -124,7 +116,7 @@ public class ResultManager : MonoBehaviour
 
         while (progress < 1)
         {
-            progress += Time.deltaTime * 2; // Скорость увеличения
+            progress += Time.deltaTime * 2;
             panel.localScale = Vector3.Lerp(startScale, targetScale, progress);
             yield return null;
         }
