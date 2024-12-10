@@ -10,6 +10,8 @@ public class ResultManager : MonoBehaviour
     public GameObject losePanel;
     public Text[] answerButtons;
 
+    [SerializeField] private AudioController _audioController;
+
     private int correctAnswer;
     private System.Random random = new System.Random();
 
@@ -95,25 +97,29 @@ public class ResultManager : MonoBehaviour
 
     private void ShowWinPanel()
     {
+        _audioController.StopMusic();
+        _audioController.WinSound();
         winPanel.SetActive(true);
         StartCoroutine(ScalePanel(winPanel.transform));
 
-        // Получаем текущий уровень
         int currentLevel = PlayerPrefs.GetInt("Level", 1);
-        currentLevel++; // Увеличиваем уровень
-        PlayerPrefs.SetInt("Level", currentLevel); // Сохраняем текущий уровень
+        currentLevel++;
+        PlayerPrefs.SetInt("Level", currentLevel);
 
-        // Проверяем и обновляем лучший уровень
         int bestLevel = PlayerPrefs.GetInt("BestLevel", 1);
         if (currentLevel > bestLevel)
         {
-            PlayerPrefs.SetInt("BestLevel", currentLevel); // Сохраняем новый лучший уровень
+            PlayerPrefs.SetInt("BestLevel", currentLevel);
         }
+
+        _audioController.Win2Sound();
     }
 
 
     private void ShowLosePanel()
     {
+        _audioController.StopMusic();
+        _audioController.LoseSound();
         losePanel.SetActive(true);
         StartCoroutine(ScalePanel(losePanel.transform));
     }
