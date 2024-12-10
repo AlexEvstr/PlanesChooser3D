@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.68281126, g: 0.7533949, b: 0.82440805, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -644,6 +644,10 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1bc4b08ddc11d47dcbb3351a140dfdc9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 649aa356b7ce342ed8f9959ca38c1083, type: 2}
     - target: {fileID: 919132149155446097, guid: 1bc4b08ddc11d47dcbb3351a140dfdc9, type: 3}
       propertyPath: m_Name
       value: house-3 (2)
@@ -1221,6 +1225,10 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1bc4b08ddc11d47dcbb3351a140dfdc9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 649aa356b7ce342ed8f9959ca38c1083, type: 2}
     - target: {fileID: 919132149155446097, guid: 1bc4b08ddc11d47dcbb3351a140dfdc9, type: 3}
       propertyPath: m_Name
       value: house-3 (1)
